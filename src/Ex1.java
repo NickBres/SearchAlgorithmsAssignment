@@ -18,7 +18,6 @@ public class Ex1 {
             for (int i = 0; i < tasks.size(); i++) {
                 Task task = tasks.get(i);
                 runTask(task,writer);
-
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -55,8 +54,6 @@ public class Ex1 {
             }else{
                 throw new RuntimeException("Wrong algorithm");
             }
-
-
 
             double durationInSeconds = (endTime - startTime) / 1e9; // Convert to seconds
             if(WITH_NAME){

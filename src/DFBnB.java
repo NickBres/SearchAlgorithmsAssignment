@@ -2,14 +2,13 @@ import java.util.*;
 
 public class DFBnB {
 
-    final private static int MAX_LIMIT = 40; // threshold bound;
+    final private static int MAX_LIMIT = 25; // threshold bound
 
     public static String search(Node start, State goal) {
         // already goal
-        if(start.state.isGoalState(goal)){
+        if (start.state.isGoalState(goal)) {
             return "nNum: " + 0 + "\nCost: " + 0;
         }
-
 
         int totalNodeCount = 0;     // Counter for created nodes
         int t = MAX_LIMIT;  // Initial threshold
@@ -17,8 +16,6 @@ public class DFBnB {
         Stack<Node> L = new Stack<>();
         HashMap<State, Node> H = new HashMap<>(); // stack fast track
         String result = "";
-
-
 
         L.push(start);
         H.put(start.state, start);
@@ -57,26 +54,20 @@ public class DFBnB {
             // Sort successors by fCost
             N.sort(Comparator.comparingInt(node -> node.fCost));
 
-            // Prune and process nodes
-            Iterator<Node> iterator = N.iterator();
-            boolean toRemove = false;
-
-            while (iterator.hasNext()) {
-                Node current = iterator.next();
-
+            List<Node> toAdd = new ArrayList<>(); // List for valid nodes to add
+            for (Node current : N) {
                 // Prune nodes exceeding the threshold
-                if (current.fCost >= t || toRemove) {
-                    iterator.remove();
-                    continue;
+                if (current.fCost >= t) {
+                    break;
                 }
 
                 Node compare = H.get(current.state);
 
                 if (compare != null && compare.isOut) {
-                    iterator.remove(); // Remove g if it's already "out"
+                    continue; // Skip g if it's already "out"
                 } else if (compare != null) {
                     if (compare.fCost <= current.fCost) {
-                        iterator.remove(); // Remove worse nodes
+                        continue; // Skip worse nodes
                     } else {
                         L.remove(compare);
                         H.remove(compare.state);
@@ -86,25 +77,28 @@ public class DFBnB {
                 // Goal check
                 if (current.state.isGoalState(goal)) {
                     t = current.fCost; // Update threshold
-                    current.isOut = true;
-                    H.put(current.state, current);
+                    current.isOut = true;           // for reconstruction only
+                    H.put(current.state, current);  // for reconstruction only
                     result = current.reconstructPathFromOutNodes(H) +
                             "\nNum: " + totalNodeCount +
                             "\nCost: " + current.gCost;
-                    iterator.remove(); // Remove goal node
-                    toRemove = true;
+                    current.isOut = false;
+                    H.remove(current.state);
+                    break;
                 }
+
+                toAdd.add(current); // Add to list for stack
             }
 
             // Add successors to the stack in reverse order
-            Collections.reverse(N);
-            for (Node g : N) {
+            Collections.reverse(toAdd);
+            for (Node g : toAdd) {
                 L.push(g);
                 H.put(g.state, g);
             }
         }
 
-        // if result wasnt updated return no path else return result
+        // if result wasn't updated return no path else return result
         return result.isEmpty() ? "no path" + "\nNum: " + totalNodeCount + "\nCost: inf" : result;
     }
 }
