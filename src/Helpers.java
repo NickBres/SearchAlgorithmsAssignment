@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Stack;
 
 public class Helpers {
 
@@ -30,6 +31,14 @@ public class Helpers {
     public static void printOpenList(Queue<Node> queue) {
         for (Node node : queue) {
             node.state.printBoard();
+        }
+        System.out.println("___________");
+    }
+
+    public static void printOpenList(Stack<Node> stack) {
+        for (Node node : stack) {
+            if(!node.isOut)
+                node.state.printBoard();
         }
         System.out.println("___________");
     }

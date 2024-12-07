@@ -1,9 +1,6 @@
 import java.util.*;
 
 public class IDA_STAR {
-
-    final private static int MAX_LIMIT = 40; // threshold bound;
-
     public static String search(Node start, State goal) {
         // already goal
         if(start.state.isGoalState(goal)){
@@ -81,7 +78,7 @@ public class IDA_STAR {
             }
 
             // If no solution found within the current threshold
-            if (minF >= MAX_LIMIT) {
+            if (minF == Integer.MAX_VALUE) {
                 return "no path" + "\nNum: " + totalNodeCount + "\nCost: inf"; // No solution found
             }
 

@@ -2,23 +2,29 @@ import java.util.*;
 
 public class DFID {
 
-    final private static int MAX_DEPTH = 12; // depth bound
-
-    public static String search(Node start, State goal) {
+    public static String search(Node start, State goal, boolean printOpen) {
         // start is a goal
         if(start.state.isGoalState(goal)){
             return "nNum: " + 0 + "\nCost: " + 0;
         }
 
         int totalNodeCount = 0; // Count of generated nodes
-        int depth = 0;          // depth threshold
+        int depth = 1;          // depth threshold
 
 
-        while (depth < MAX_DEPTH) { // depth bound
+        while (true) {
             HashSet<State> H = new HashSet<>();
 
+            H.add(start.state);
+
+            if(printOpen){
+                System.out.println("Depth limit: " + depth);
+            }
+
             // Perform limited DFS for the current depth
-            Result result = Limited_DFS(start, goal, depth, H, 0);
+            Result result = Limited_DFS(start, goal, depth , H, 0,printOpen);
+
+           // H.clear(); // if we clear H here instead of H.remove further we will use more memory but will recreate fewer nodes
 
             // Accumulate total node count
             totalNodeCount += result.nodeCount;
@@ -31,13 +37,18 @@ public class DFID {
                 }
             }
             depth++; // Increment depth for the next iteration
+
+            if(printOpen){
+                System.out.println("_____________");
+            }
         }
-
-        return "no path" + "\nNum: " + totalNodeCount + "\nCost: inf"; // No solution found
-
     }
 
-    private static Result Limited_DFS(Node n, State goal, int limit, HashSet<State> H, int nodeCount) {
+    private static Result Limited_DFS(Node n, State goal, int limit, HashSet<State> H, int nodeCount,boolean printOpen) {
+
+        if(printOpen){
+            n.state.printBoard();
+        }
 
         // Goal check
         if (n.isGoal(goal)) {
@@ -50,6 +61,7 @@ public class DFID {
         }
 
         H.add(n.state); // Add the current state to the hash table
+
         boolean isCutoff = false;
 
 
@@ -69,7 +81,7 @@ public class DFID {
                     }
 
                     // Recursively call limitedDFS for the child
-                    Result result = Limited_DFS(g, goal, limit - 1, H, nodeCount);
+                    Result result = Limited_DFS(g, goal, limit - 1, H, nodeCount,printOpen);
 
                     // Accumulate node counts from the recursive result
                     nodeCount = result.nodeCount;
@@ -85,7 +97,8 @@ public class DFID {
             }
         }
 
-        H.remove(n.state); // Remove the state to release memory
+        H.remove(n.state); // clearing the H
+
         if (isCutoff) {
             return new Result(null, false, nodeCount, 0, true); // Return cutoff
         } else {

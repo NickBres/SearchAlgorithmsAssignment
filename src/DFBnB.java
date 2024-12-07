@@ -2,20 +2,19 @@ import java.util.*;
 
 public class DFBnB {
 
-    final private static int MAX_LIMIT = 25; // threshold bound
-
-    public static String search(Node start, State goal) {
+    public static String search(Node start, State goal, boolean printOpen) {
         // already goal
         if (start.state.isGoalState(goal)) {
             return "nNum: " + 0 + "\nCost: " + 0;
         }
 
         int totalNodeCount = 0;     // Counter for created nodes
-        int t = MAX_LIMIT;  // Initial threshold
+        int t = Integer.MAX_VALUE;  // Initial threshold
+        int step = 0;           // steps counter
 
         Stack<Node> L = new Stack<>();
         HashMap<State, Node> H = new HashMap<>(); // stack fast track
-        String result = "";
+        Result result = new Result("",  false, 0, 0);
 
         L.push(start);
         H.put(start.state, start);
@@ -77,11 +76,13 @@ public class DFBnB {
                 // Goal check
                 if (current.state.isGoalState(goal)) {
                     t = current.fCost; // Update threshold
+                    step = 0; // reset steps
                     current.isOut = true;           // for reconstruction only
                     H.put(current.state, current);  // for reconstruction only
-                    result = current.reconstructPathFromOutNodes(H) +
-                            "\nNum: " + totalNodeCount +
-                            "\nCost: " + current.gCost;
+                    result = new Result(current.reconstructPathFromOutNodes(H),
+                            true,
+                            totalNodeCount,
+                            current.gCost);
                     current.isOut = false;
                     H.remove(current.state);
                     break;
@@ -96,9 +97,34 @@ public class DFBnB {
                 L.push(g);
                 H.put(g.state, g);
             }
+
+            if (printOpen) {
+                System.out.println("Threshold: " + t +  " Step " + (++step) + ":");
+                Helpers.printOpenList(L);
+            }
         }
 
+        result.nodeCount = totalNodeCount;
         // if result wasn't updated return no path else return result
-        return result.isEmpty() ? "no path" + "\nNum: " + totalNodeCount + "\nCost: inf" : result;
+        return !result.found ? "no path" + "\nNum: " + totalNodeCount + "\nCost: inf" : result.toString();
+    }
+
+    // Helper class to store search results
+    private static class Result {
+        String path;
+        boolean found;      // True if goal is found
+        int nodeCount;      // Count of created nodes
+        int cost;           // Total cost of the solution
+
+        Result(String path, boolean found, int nodeCount, int cost) {
+            this.path = path;
+            this.found = found;
+            this.nodeCount = nodeCount;
+            this.cost = cost;
+        }
+
+        public String toString(){
+            return path + "\nNum: " + nodeCount + "\nCost: " + cost;
+        }
     }
 }

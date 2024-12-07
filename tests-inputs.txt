@@ -1,0 +1,27 @@
+original
+R,R,_
+B,B,_
+G,G,X
+Goal state:
+G,R,R
+B,B,_
+_,G,X
+
+no path
+X,R,X
+X,B,_
+X,G,X
+Goal state:
+X,R,X
+X,G,_
+X,B,X
+
+bfs and dfid get not optimal path
+R,_,_
+B,_,_
+X,X,X
+Goal state:
+B,_,_
+R,_,_
+X,X,X
+

@@ -123,4 +123,8 @@ public class Node implements Comparable<Node> {
     public boolean isGoal(State goal){
         return state.isGoalState(goal);
     }
+
+    public String toString(){
+        return state.toString() + " fCost: " +  fCost;
+    }
 }
