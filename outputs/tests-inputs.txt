@@ -25,3 +25,12 @@ B,_,_
 R,_,_
 X,X,X
 
+complicated task where bfs and dfid return not optimal but shorter path
+R,R,_
+B,X,B
+G,G,_
+Goal state:
+G,G,B
+_,X,R
+R,_,B
+

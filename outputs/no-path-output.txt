@@ -1,0 +1,30 @@
+**************
+BFS
+no path
+Num: 9
+Cost: inf
+0.006 seconds
+**************
+DFID
+no path
+Num: 55
+Cost: inf
+0.002 seconds
+**************
+A_STAR
+no path
+Num: 9
+Cost: inf
+0.001 seconds
+**************
+IDA_STAR
+no path
+Num: 90
+Cost: inf
+0.002 seconds
+**************
+DFBNB
+no path
+Num: 14
+Cost: inf
+0.002 seconds
