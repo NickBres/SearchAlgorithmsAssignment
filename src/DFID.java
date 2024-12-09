@@ -8,6 +8,11 @@ public class DFID {
             return "nNum: " + 0 + "\nCost: " + 0;
         }
 
+        // check if goal may be reached (has same amount of marbles and same closed cells)
+        if(!Helpers.CheckInput(start.state,goal)){
+            return "no path\nNum: 0\nCost: inf" ;
+        }
+
         int totalNodeCount = 0; // Count of generated nodes
         int depth = 1;          // depth threshold
 

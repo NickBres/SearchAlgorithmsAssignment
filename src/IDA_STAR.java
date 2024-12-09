@@ -7,6 +7,11 @@ public class IDA_STAR {
             return "nNum: " + 0 + "\nCost: " + 0;
         }
 
+        // check if goal may be reached (has same amount of marbles and same closed cells)
+        if(!Helpers.CheckInput(start.state,goal)){
+            return "no path\nNum: 0\nCost: inf" ;
+        }
+
         int totalNodeCount = 0;       // Counter for total created nodes
         int t = start.hCost;  // Initial threshold is the heuristic value of the start node
 

@@ -8,6 +8,11 @@ public class DFBnB {
             return "nNum: " + 0 + "\nCost: " + 0;
         }
 
+        // check if goal may be reached (has same amount of marbles and same closed cells)
+        if(!Helpers.CheckInput(start.state,goal)){
+            return "no path\nNum: 0\nCost: inf" ;
+        }
+
         int totalNodeCount = 0;     // Counter for created nodes
         int t = Integer.MAX_VALUE;  // Initial threshold
         int step = 0;           // steps counter

@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 public class Helpers {
 
@@ -66,6 +63,47 @@ public class Helpers {
             System.out.print("________");
         }
         System.out.println();
+    }
+
+    public static boolean CheckInput(State start, State goal) {
+        // Convert board states to character arrays
+        char[] startBoard = start.board.toCharArray();
+        char[] goalBoard = goal.board.toCharArray();
+
+        // Maps to store the count of each marble and closed cells
+        Map<Character, Integer> startCount = new HashMap<>();
+        Map<Character, Integer> goalCount = new HashMap<>();
+
+        // Check the positions of 'X' and count all characters
+        for (int i = 0; i < startBoard.length; i++) {
+            char startCell = startBoard[i];
+            char goalCell = goalBoard[i];
+
+            // Check if 'X' positions match
+            if (startCell == 'X' && goalCell != 'X') {
+                return false; // 'X' position mismatch
+            }
+            if (goalCell == 'X' && startCell != 'X') {
+                return false; // 'X' position mismatch
+            }
+
+            // Count marbles and other characters
+            startCount.put(startCell, startCount.getOrDefault(startCell, 0) + 1);
+            goalCount.put(goalCell, goalCount.getOrDefault(goalCell, 0) + 1);
+        }
+
+        // Compare counts between start and goal
+        for (Map.Entry<Character, Integer> entry : startCount.entrySet()) {
+            char marble = entry.getKey();
+            int startCountValue = entry.getValue();
+            int goalCountValue = goalCount.getOrDefault(marble, 0);
+
+            if (startCountValue != goalCountValue) {
+                return false; // Mismatch in marble counts
+            }
+        }
+
+        return true; // Input is valid
     }
 
 
