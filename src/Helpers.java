@@ -61,7 +61,11 @@ public class Helpers {
             }
             System.out.println(); // Move to the next row
         }
-        System.out.println("___________");
+
+        for(Node node : nodes) {
+            System.out.print("________");
+        }
+        System.out.println();
     }
 
 
