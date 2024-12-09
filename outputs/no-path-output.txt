@@ -3,13 +3,13 @@ BFS
 no path
 Num: 9
 Cost: inf
-0.006 seconds
+0.005 seconds
 **************
 DFID
 no path
 Num: 55
 Cost: inf
-0.002 seconds
+0.001 seconds
 **************
 A_STAR
 no path
@@ -21,10 +21,11 @@ IDA_STAR
 no path
 Num: 90
 Cost: inf
-0.002 seconds
+0.001 seconds
 **************
 DFBNB
 no path
 Num: 14
 Cost: inf
 0.002 seconds
+**************

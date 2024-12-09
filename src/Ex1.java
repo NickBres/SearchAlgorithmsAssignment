@@ -6,7 +6,7 @@ import java.util.List;
 public class Ex1 {
 
     // for tests
-    static boolean  RUN_COMPARISON = true; // run list of algorithms on the input
+    static boolean  RUN_COMPARISON = false; // run list of algorithms on the input
     static Task.Algorithm ALGO_NAME[] = // list of algorithms to run
             {
                     Task.Algorithm.BFS,
@@ -31,6 +31,7 @@ public class Ex1 {
                     task.algorithm = ALGO_NAME[i];
                     runTask(task,writer);
                 }
+                writer.write("**************\n");
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
