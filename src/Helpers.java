@@ -29,16 +29,37 @@ public class Helpers {
     }
 
     public static void printOpenList(Queue<Node> queue) {
-        for (Node node : queue) {
-            node.state.printBoard();
-        }
-        System.out.println("___________");
+        printBoards(queue);
     }
 
     public static void printOpenList(Stack<Node> stack) {
+        List<Node> filteredNodes = new ArrayList<>();
         for (Node node : stack) {
-            if(!node.isOut)
-                node.state.printBoard();
+            if (!node.isOut) {
+                filteredNodes.add(node);
+            }
+        }
+        printBoards(filteredNodes);
+    }
+
+    private static void printBoards(Iterable<Node> nodes) {
+        List<String[]> boards = new ArrayList<>();
+
+        // Collect rows of each board
+        for (Node node : nodes) {
+            String[] boardRows = new String[3];
+            for (int i = 0; i < 3; i++) {
+                boardRows[i] = node.state.board.substring(i * 3, (i + 1) * 3).replace("", " ").trim();
+            }
+            boards.add(boardRows);
+        }
+
+        // Print rows side by side
+        for (int row = 0; row < 3; row++) {
+            for (String[] board : boards) {
+                System.out.print(board[row] + "   "); // Add space between boards
+            }
+            System.out.println(); // Move to the next row
         }
         System.out.println("___________");
     }
