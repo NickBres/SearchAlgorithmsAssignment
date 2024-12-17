@@ -2,6 +2,8 @@
 
 This project implements several search algorithms to solve a 3x3 board game problem. The goal is to find the optimal sequence of moves to transition from a given initial board state to a specified goal state, minimizing the overall cost. The algorithms implemented include BFS, DFID, A*, IDA*, and DFBnB.
 
+[Heuristic Function](https://github.com/NickBres/SearchAlgorithmsAssignment/blob/master/heuristic.pdf)
+
 ---
 
 ## Input File Format
@@ -74,6 +76,8 @@ static Task.Algorithm ALGO_NAME[] = {
     Task.Algorithm.DFBNB
 };
 ```
+
+
 
 ### Output Examples
 You can view example outputs in the repository:
